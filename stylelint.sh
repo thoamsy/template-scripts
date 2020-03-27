@@ -32,3 +32,8 @@ fi
 
 git add .
 git commit -m 'ci: 添加 stylelint!'
+
+echo '"*.{css,scss,less,pcss}": [
+      "stylelint"
+    ]' | pbcopy
+echo lint-stages 配置复制成功，就自行添加
