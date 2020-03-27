@@ -1,4 +1,4 @@
-git checkout -b config-stylelint
+git checkout -b add-stylelint
 if [ -f "yarn.lock" ]; then
   yarn add -D stylelint stylelint-config-recommended
 else
