@@ -1,4 +1,4 @@
-
+git checkout -b config-stylelint
 if [ -f "yarn.lock" ]; then
   yarn add -D stylelint stylelint-config-recommended
 else
@@ -26,7 +26,9 @@ fi
 filterLint=$(code --list-extensions | grep 'stylelint.vscode-stylelint')
 
 if [ -z filterLint ]; then
-  echo '正在安装 vscode—stylelint 插件‘
-  code  --install-extension stylelint.vscode-stylelint
+  echo 正在安装 vscode—stylelint 插件
+  code --install-extension stylelint.vscode-stylelint
 fi
 
+git add .
+git commit -m 'ci: 添加 stylelint!'
