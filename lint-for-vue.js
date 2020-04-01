@@ -76,11 +76,11 @@ function writeESLint() {
       parser: 'babel-eslint',
       sourceType: 'module',
     };
-    console.log(eslintConfig.extends);
+
     eslintConfig.extends = []
       .concat(eslintConfig.extends || [])
       .filter(preset => !preset.endsWith('prettier') && !preset.endsWith('vue'))
-      .concat(['plugin:vue/recommended', 'plugin:prettier/recommended']);
+      .concat(['plugin:vue/base', 'plugin:prettier/recommended']);
 
     eslintConfig.plugins = []
       .concat(eslintConfig.plugins || [])
@@ -130,5 +130,8 @@ function writePrettier() {
     'add -D eslint@^6 prettier eslint-config-prettier eslint-plugin-prettier vue-eslint-parser eslint-plugin-vue@^6 husky pretty-quick',
   );
 
-  writeESLint() && writePrettier() && updatePackageJSON();
+  writeESLint() &&
+    writePrettier() &&
+    updatePackageJSON() &&
+    console.log('为了最好的效果，请先 reload vscode');
 })();
