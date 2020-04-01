@@ -1,7 +1,8 @@
 const { promisify } = require('util');
 const path = require('path');
-const { readFileSync, writeFile, writeFileSync, readFile } = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
 const { spawn } = require('child_process');
+const { plugins } = require('../development_workflow/.eslintrc');
 
 let packageTool;
 try {
@@ -55,7 +56,7 @@ function updatePackageJSON() {
     }
 
     if (packageJSON.scripts) {
-      packageJSON.format = `prettier --write './src/**/*.{js,ts,vue}'`;
+      packageJSON.scripts.format = `prettier --write \"./src/**/*.{js,ts,vue}\"`;
     }
     writeFileSync(packagePath, JSON.stringify(packageJSON, null, 2));
     console.log('写入 lint-staged 成功');
@@ -75,13 +76,14 @@ function writeESLint() {
       parser: 'babel-eslint',
       sourceType: 'module',
     };
-    eslintConfig.extends = (eslintConfig.extends || []).concat([
-      'vue',
-      'plugin:vue/recommended',
-      'prettier/recommended',
-    ]);
+    eslintConfig.extends = (eslintConfig.extends || [])
+      .filter(preset => !preset.endsWith('prettier') && !preset.endsWith('vue'))
+      .concat(['plugin:vue/recommended', 'plugin:prettier/recommended']);
+
     eslintConfig.plugins = (eslintConfig.plugins || [])
-      .filter(plugin => !plugin.endsWith('html'))
+      .filter(
+        plugin => !plugin.endsWith('html') && !plugin.endsWith('prettier'),
+      )
       .concat('vue');
 
     writeFileSync(
