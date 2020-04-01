@@ -76,6 +76,7 @@ function writeESLint() {
       parser: 'babel-eslint',
       sourceType: 'module',
     };
+    console.log(eslintConfig.extends);
     eslintConfig.extends = (eslintConfig.extends || [])
       .filter(preset => !preset.endsWith('prettier') && !preset.endsWith('vue'))
       .concat(['plugin:vue/recommended', 'plugin:prettier/recommended']);
@@ -93,8 +94,8 @@ function writeESLint() {
 
     console.log('修改 eslint 配置成功 🎉');
     return true;
-  } catch {
-    console.error('没找到 eslint 配置');
+  } catch (err) {
+    console.error(err);
     return false;
   }
 }
