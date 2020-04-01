@@ -77,11 +77,13 @@ function writeESLint() {
       sourceType: 'module',
     };
     console.log(eslintConfig.extends);
-    eslintConfig.extends = (eslintConfig.extends || [])
+    eslintConfig.extends = []
+      .concat(eslintConfig.extends || [])
       .filter(preset => !preset.endsWith('prettier') && !preset.endsWith('vue'))
       .concat(['plugin:vue/recommended', 'plugin:prettier/recommended']);
 
-    eslintConfig.plugins = (eslintConfig.plugins || [])
+    eslintConfig.plugins = []
+      .concat(eslintConfig.plugins || [])
       .filter(
         plugin => !plugin.endsWith('html') && !plugin.endsWith('prettier'),
       )
